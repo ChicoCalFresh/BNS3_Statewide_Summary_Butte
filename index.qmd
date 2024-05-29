@@ -59,21 +59,19 @@ The main purpose of this third cross-sectional study was to evaluate the followi
 - Students who met the eligibility criteria of being undergraduate EOP/EOPS students and receiving less than 11 meals per week from other services (used as an eligibility criteria when determining CalFresh Food eligibility) were then emailed a survey. 
 - Participants were given a \$25 gift card incentive for completing the survey. 
 - EOP/EOPS students were identified as the target population for this survey based on their low-income and first-generation student status, which indicates a higher probability of using CalFresh Food and being likely eligible for CalFresh Food.
-
-
-A total of `r nrow(bns)` EOP/EOPS students in California were surveyed from the following campus:
+- A total of **`r nrow(bns)` EOP/EOPS students** were surveyed from the Butte College campus.
 
 ```{r, fig.width=6, fig.height=4}
 
 
-ggplot() + 
-  geom_polygon(data=map_and_data, aes(x=long, y=lat, group=group),
-                color="black", fill= CF_green) + 
-  geom_point(aes(Long, Lat)) +
-  ggrepel::geom_label_repel(aes(x = Long, 
-                      y = Lat, 
-                      label = Names), nudge_y  = 0.01, min.segment.length = 0) + 
-  theme_void() 
+# ggplot() + 
+#   geom_polygon(data=map_and_data, aes(x=long, y=lat, group=group),
+#                 color="black", fill= CF_green) + 
+#   geom_point(aes(Long, Lat)) +
+#   ggrepel::geom_label_repel(aes(x = Long, 
+#                       y = Lat, 
+#                       label = Names), nudge_y  = 0.01, min.segment.length = 0) + 
+#   theme_void() 
 
 ```
 
@@ -86,7 +84,7 @@ ggplot() +
 
 ## Use of Website and Access to Data 
 
-Please reach out to our PI, Stephanie Bianco <span style="color: blue; text-decoration: underline;">sbianco@csuchico.edu</span>, if you would like more information on using or citing this website, accessing the data, methods used, or survey instruments used. Dissemination activities are in progress.
+Please reach out to our PI, Stephanie Bianco <span style="color: blue; text-decoration: underline;">sbianco@csuchico.edu</span>, if you would like more information on using or citing this website, accessing the data, methods used, or survey instruments used.
 
 
 
