@@ -140,7 +140,7 @@ gghistogram(tmp2, x = "NonAcademic", add = "mean", fill = plot_color, alpha = 1)
 
 **Survey Question:** *This variable was derived by taking the sum of students' paid work hours, unpaid work hours, and caregiving hours.*
 
-**Additional Notes:**  Total workload was calculated only for students who reported their paid work hours, unpaid work hours, and caregiving hours. 
+**Additional Notes:** Non-academic workload was calculated only for students who reported their paid work hours, unpaid work hours, and caregiving hours. 
 
 
 **Summary:** The average total number of hours worked per week in non-academic matters was `r round(mean(tmp2$NonAcademic, na.rm = TRUE), 2)` hours (denoted by the dotted line), while the median was `r median(tmp2$NonAcademic, na.rm = TRUE)` hours. A total of `r get_count_and_percent3(tmp2$NonAcademic, 40)` students spent 40 or more hours per week on non-academic work. 
