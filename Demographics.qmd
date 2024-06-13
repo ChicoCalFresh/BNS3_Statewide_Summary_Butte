@@ -42,13 +42,30 @@ Students were asked to report information relating to their personal demographic
 gghistogram(bns, x = "age", add = "mean", alpha = 1, 
             fill = plot_color) + 
   xlab("Age (years)") + ylab("Number of Students")
+
+# Filter different data sets for in line code comparison 
+bns_UC <- bns_unfiltered %>% filter(bns_unfiltered$school == "UC Berkeley")
+
+bns_CSU <- bns_unfiltered %>% filter(bns_unfiltered$school == "Cal State LA" | 
+                  bns_unfiltered$school =="Cal State San Bernardino" |
+                  bns_unfiltered$school == "CSU Bakersfield" | 
+                  bns_unfiltered$school == "CSU Dominguez Hills" | 
+                  bns_unfiltered$school == "Sacramento State" | 
+                  bns_unfiltered$school == "San Francisco State")
+
+bns_CCC <- bns_unfiltered %>% filter(bns_unfiltered$school == "Butte CC" | 
+                  bns_unfiltered$school =="Allan Hancock Community College" |
+                  bns_unfiltered$school == "Clovis CC" | 
+                  bns_unfiltered$school == "Mt. SAC CC" | 
+                  bns_unfiltered$school == "Palo Verde CC")
+
 ```
 
 **Survey Question: ** *What is your date of birth?*
 
 **Additional Notes: ** Student age was determined by the difference between birth date and the time in which the survey was completed. Values were rounded down to the nearest whole number. 
 
-**Summary: ** The average age of the students was `r round(mean(bns$age, na.rm = TRUE),1)` years with a range of `r min(bns$age, na.rm = TRUE)` to `r max(bns$age, na.rm = TRUE)`, and a median age of `r median(bns$age)`. A total of `r get_count_and_percent3(bns$age, 21)` students were 21 or older, and `r get_count_and_percent3(bns$age, 30)` students were 30 or older. 
+**Summary: ** The average age of the students was `r round(mean(bns$age, na.rm = TRUE),1)` years with a range of `r min(bns$age, na.rm = TRUE)` to `r max(bns$age, na.rm = TRUE)`, and a median age of `r median(bns$age)`. A total of `r get_count_and_percent3(bns$age, 21)` students were 21 or older, and `r get_count_and_percent3(bns$age, 30)` students were 30 or older. Mean ages differed between campus types, where the mean age among all CSU students was `r round(mean(bns_CSU$age, na.rm = TRUE),1)`, compared to `r round(mean(bns_CCC$age, na.rm = TRUE),1)` among all CCC students, and `r round(mean(bns_UC$age, na.rm = TRUE),1)` among all UC students. 
 
 <br>
 
@@ -178,25 +195,48 @@ tmp %>% na.omit() %>%
 ## Dependents
 
 ```{r}
-tmp <- bns %>% filter(q11>0, q11 < 9) # drop 0 and "i don't have dependent' responses. 
+
+# Filter out 0 and "I don't know responses" - Used to get n count of those with dependents 
+bns$q11 <- factor(bns$q11, levels = c("I don't have dependents", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
+
+bns$q11_tmp <- na_if(bns$q11, "0")
+bns$q11_tmp <- na_if(bns$q11_tmp, "I don't have dependents")
+
+bns$q11_tmp <- fct_drop(bns$q11_tmp, only = c("I don't have dependents", "0"))
 
 
 ```
 
 
 ```{r}
-#| fig-height: 4
-#| fig-width: 6
-#| fig-cap: !expr sprintf("%s Reported Number of Dependents %s.", NextFigure(), print_n_reporting('q11'))
-plot_frq(tmp$q11, geom.colors = plot_color,) + xlab('Number of Dependents') + ylab("Number of Students")
+#| fig-height: 5
+#| fig-width: 8
+#| fig-cap: !expr sprintf("%s Reported Number of Dependents Among Total Sample %s and %s Reported Number of Dependents Among Those With Dependents %s.", NextFigure(), print_n_reporting('q11'), NextFigure(), print_n_reporting('q11_tmp'))
+
+
+p1 <- plot_frq(bns$q11, geom.colors = plot_color, drop.empty = FALSE,
+                ylim = c(0, 1.6*max(table(bns$q11))),
+                title = 'Number of Dependents Among Total Sample') + 
+  ylab("Number of Students") + xlab("")
+
+p1$data$valid.prc <- signif(p1$data$valid.prc, digits = 1)
+
+
+p2 <- plot_frq(bns$q11_tmp, geom.colors = plot_color, drop.empty = FALSE,
+               ylim = c(0, 1.6*max(table(bns$q11_tmp))),
+               title = 'Number of Dependents Among Those With Dependents') + 
+  xlab('') + 
+  ylab("Number of Students")
+
+grid.arrange(p1, p2)
+
 ```
 
 **Survey Question: ** *If you have dependents, then how many of them receive more than 50% of their financial support from you?*
 
-**Additional Notes: ** A total of `r get_count_and_percent(bns$q11, "I don't have dependents")` students reporting no dependents and `r get_count_and_percent(bns$q11, "0")` reporting dependents with less than 50% financial support were omitted from the chart. 
 
+**Summary: ** Among the total sample, `r get_count_and_percent(bns$q11, "I don't have dependents")` students reported having no dependents and `r get_count_and_percent(bns$q11, "0")` reported having dependents receiving less than 50% financial support. The remaining `r count_and_percent(bns$q11, "1", "2", "3", "4", "5", "6", "7", "8", "9", "10")` students reported having dependents receiving more than 50% financial support. Of those with dependents receiving more than 50% financial support, `r get_count_and_percent(bns$q11_tmp, '1')` had one dependent, `r get_count_and_percent(bns$q11_tmp, '2')` had two, and `r get_count_and_percent(bns$q11_tmp, '3')` students had 3 or more dependents.
 
-**Summary: ** A total of `r sum(table(tmp$q11))` students reported having dependents who receive more than 50% of their financial support. Of those with dependents, `r get_count_and_percent(tmp$q11, '1')` had one dependent, `r get_count_and_percent(tmp$q11, '2')` had two, and `r get_count_and_percent3(tmp$q11, '3')` students had 3 or more dependents.
 
 <br>
 
