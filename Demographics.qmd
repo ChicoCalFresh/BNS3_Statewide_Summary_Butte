@@ -65,7 +65,7 @@ bns_CCC <- bns_unfiltered %>% filter(bns_unfiltered$school == "Butte CC" |
 
 **Additional Notes: ** Student age was determined by the difference between birth date and the time in which the survey was completed. Values were rounded down to the nearest whole number. 
 
-**Summary: ** The average age of the students was `r round(mean(bns$age, na.rm = TRUE),1)` years with a range of `r min(bns$age, na.rm = TRUE)` to `r max(bns$age, na.rm = TRUE)`, and a median age of `r median(bns$age)`. A total of `r get_count_and_percent3(bns$age, 21)` students were 21 or older, and `r get_count_and_percent3(bns$age, 30)` students were 30 or older. Mean ages differed between campus types, where the mean age among all CSU students was `r round(mean(bns_CSU$age, na.rm = TRUE),1)`, compared to `r round(mean(bns_CCC$age, na.rm = TRUE),1)` among all CCC students, and `r round(mean(bns_UC$age, na.rm = TRUE),1)` among all UC students. 
+**Summary: ** The average age of the students was `r round(mean(bns$age, na.rm = TRUE),1)` years with a range of `r min(bns$age, na.rm = TRUE)` to `r max(bns$age, na.rm = TRUE)`, and a median age of `r median(bns$age)`. A total of `r get_count_and_percent3(bns$age, 21)` students were 21 or older, and `r get_count_and_percent3(bns$age, 30)` students were 30 or older.
 
 <br>
 
