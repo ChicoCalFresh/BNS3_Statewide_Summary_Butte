@@ -15,7 +15,7 @@ library(scales)
 #PATH_TO_BOX <- "C:/Box/" # Robin
 PATH_TO_BOX <- "C:/Users/slmooradian/Box/" # Saul
 #PATH_TO_BOX <- "C:/Users/shady/Box/" # Shady
-bns <- readRDS(paste0(PATH_TO_BOX, "CHC All/01. Projects Active/CFO (SP6511801)/08. Research and Evaluation/02 - Data Analysis/BNS3-statewide/data/bns3_statewide_clean.rds"))
+bns <- readRDS(paste0(PATH_TO_BOX, "CHC All/01. Projects Active/CFO (SP6511801)/08. Research and Evaluation/03 - Data Analysis/BNS3-statewide/data/bns3_statewide_clean.rds"))
 bns_unfiltered <- bns
 bns <- bns %>% filter(school == "Butte CC")
 
