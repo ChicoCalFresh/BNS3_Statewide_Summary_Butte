@@ -71,7 +71,6 @@ bns_CCC <- bns_unfiltered %>% filter(bns_unfiltered$school == "Butte CC" |
 
 ## Gender Identity
 
-<div class = "row">
 
 ::: col-md-7
 ```{r}
